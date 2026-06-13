@@ -3,174 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Resume of Ehsan Forootan">
-    <title>Ehsan Forootan - Resume</title>
+    <meta name="description" content="Ehsan Forootan — Graduate researcher in AI, Machine Learning, and Control Systems at the University of Tehran.">
+    <title>Ehsan Forootan — AI & Control Systems Researcher</title>
     <style>
-        body {
-            font-family: Times New Roman, Serif;
-            line-height: 1.7;
-            margin: 0;
-            padding: 0;
-            background-color: #FFF8DC;
+        :root {
+            --bg: #f4f6fb;
+            --surface: #ffffff;
+            --text: #1c2333;
+            --muted: #5b6478;
+            --accent: #4f46e5;
+            --accent-soft: #eef0ff;
+            --border: #e3e7ef;
+            --shadow: 0 10px 30px rgba(20, 25, 50, 0.08);
         }
-        header {
-            background-color: #DC143C;
-            color: white;
-            padding: 22px;
-            text-align: center;
-        }
-        header h1 {
-            margin: 1px;
-        }
-        nav {
-            margin-top: 10px;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 18px;
-        }
-        section {
-            padding: 20px;
-            max-width: 900px;
-            margin: auto;
-            background: white;
-        }
-              section.visible {
-            opacity: 1;
-            transform: translateY(0); /* Reset position when it comes into view */
-        }
-        h2 {
-            color: #333;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        ul li {
-            padding: 5px 0;
-        }
-        .contact-info, .skills, .experience, .education {
-            margin-bottom: 20px;
+        [data-theme="dark"] {
+            --bg: #0e1117;
+            --surface: #161b22;
+            --text: #e6e9f0;
+            --muted: #9aa4b8;
+            --accent: #7c83ff;
+            --accent-soft: #1d2230;
+            --border: #262d3a;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
 
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            color: var(--text);
+            background: var(--bg);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* ---------- Header / Nav ---------- */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        [data-theme="dark"] header { background: rgba(22, 27, 34, 0.7); }
+
+        .nav-wrap {
+            max-width: 960px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 24px;
+        }
+        .brand { font-weight: 700; font-size: 1.15rem; letter-spacing: .3px; }
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: .95rem;
+            transition: color .2s;
+        }
+        nav a:hover { color: var(--accent); }
+
+        .theme-btn {
+            background: var(--accent-soft);
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 999px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: .9rem;
+        }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            max-width: 960px;
+            margin: auto;
+            padding: 80px 24px 40px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin: 0 0 12px;
+        }
+        .hero .tagline {
+            color: var(--muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 24px;
+        }
+        .hero .links a {
+            display: inline-block;
+            margin: 6px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: .95rem;
+            border: 1px solid var(--border);
+            color: var(--text);
+            background: var(--surface);
+            transition: transform .2s, border-color .2s;
+        }
+        .hero .links a:hover { transform: translateY(-2px); border-color: var(--accent); }
+        .hero .links a.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+        /* ---------- Sections ---------- */
+        main { max-width: 960px; margin: auto; padding: 0 24px 60px; }
+
+        section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 28px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity .6s ease, transform .6s ease;
+        }
+        section.visible { opacity: 1; transform: translateY(0); }
+
         h2 {
-            color: #333;
+            margin-top: 0;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+        h2::before {
+            content: "";
+            width: 5px; height: 22px;
+            background: var(--accent);
+            border-radius: 4px;
         }
-        ul li {
-            padding: 5px 0;
+        h3 { margin-bottom: 2px; }
+        .date { color: var(--muted); font-size: .9rem; margin-top: 0; }
+
+        ul { list-style: none; padding: 0; margin: 0; }
+        .skills li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
         }
-        .contact-info, .aboutme, .skills, .experience, .education, .papers {
-            margin-bottom: 20px;
+        .skills li:last-child { border-bottom: none; }
+        .skills strong { color: var(--accent); }
+
+        a { color: var(--accent); }
+
+        .timeline-item {
+            padding-left: 18px;
+            border-left: 2px solid var(--border);
+            margin-bottom: 22px;
         }
-         /* Smooth scrolling behavior */
-        html {
-            scroll-behavior: smooth;
+        .timeline-item:last-child { margin-bottom: 0; }
+
+        .paper {
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--accent-soft);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--muted);
+            padding: 30px;
+            font-size: .9rem;
+        }
+
+        @media (max-width: 600px) {
+            nav { display: none; }
+            section { padding: 22px; }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Ehsan Forootan</h1>
-        <nav>
-            <a href="#about-me">About me</a>
-            <a href="#skills">Skills</a>
-            <a href="#experience">Experience</a>
-            <a href="#education">Education</a>
-            <a href="#papers">Papers</a>
-        </nav>
+        <div class="nav-wrap">
+            <span class="brand">Ehsan Forootan</span>
+            <nav>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#education">Education</a>
+                <a href="#papers">Papers</a>
+            </nav>
+            <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">🌙 Dark</button>
+        </div>
     </header>
-    
-    <section>
-        <div class="contact-info">
-            <h2>Contact Information</h2>
-            <p>Email: <a href = "esa_forootan@yahoo.com" target = "_blank">esa_forootan@yahoo.com</a></p>
-            <p>LinkedIn: <a href="https://www.linkedin.com/in/ehsan-forootan-208776267/" target="_blank">linkedin.com/in/ehsan-forootan</a></p>
+
+    <div class="hero">
+        <h1>Ehsan Forootan</h1>
+        <p class="tagline">Graduate researcher in Artificial Intelligence, Machine Learning, and Control Systems at the University of Tehran.</p>
+        <div class="links">
+            <a class="primary" href="mailto:esa_forootan@yahoo.com">Email Me</a>
+            <a href="https://www.linkedin.com/in/ehsan-forootan-208776267/" target="_blank" rel="noopener">LinkedIn</a>
         </div>
-        
-        <div class="about-me">
-            <h2>About me</h2>
-            <p>Hello there, I am Ehsan, and I am a graduate student studing Electrical and Computer engineering at University of Tehran.
-            If I want to write a few lines about myself, I have to start by stating that I am very fond of Artificial Intelligence.
-            Because of this, I have studied and worked extensively in many realted fields such as Machine learning, Deep learning and 
-            Reinforcement learning. Moreover, as optimization is realted to most of AI sub-sections, I have familiarized myself to
-            Concepts like Linear and Non-Linear Optimization and Optimal Control. What is more, Related Control Theory and Algbera 
-            theorems are at the core of designing a well-implemented intelligent system, which I have been in Contact with as well.</p>
-            <br>
-            <p>My reaserch is mostly focused on designing, creating, fine-tuning and exploring end-to-end Intelligent systems. 
-            Some of the research I have done are related to Vision Systems, Robot-grasping and Price Predition. These works will hopefully not 
-            only pave a path towards studing and developing Artificial General Intelligence, but also help the Industry with a Multi-faced solution as well.  
-            </p>
-            
-        </div>
-        
-        
-        <div id="skills" class="skills">
+    </div>
+
+    <main>
+        <section id="about">
+            <h2>About Me</h2>
+            <p>Hello! I'm Ehsan, a graduate student in Electrical and Computer Engineering at the University of Tehran. I'm deeply passionate about Artificial Intelligence and have worked extensively across Machine Learning, Deep Learning, and Reinforcement Learning.</p>
+            <p>Because optimization underpins so much of AI, I've also built a strong foundation in linear and non-linear optimization and optimal control. Control theory and linear algebra sit at the core of any well-designed intelligent system — areas I've engaged with throughout my studies.</p>
+            <p>My research centers on designing, building, fine-tuning, and exploring end-to-end intelligent systems, spanning vision systems, robotic grasping, and price prediction. I hope this work helps advance the path toward Artificial General Intelligence while delivering practical, multi-faceted solutions for industry.</p>
+        </section>
+
+        <section id="skills" class="skills">
             <h2>Skills</h2>
             <ul>
-                <li>Programming Languages: Python, C/C++, Ruby, MATLAB + Simulink </li>
-                <li>Device Programming:Verilog, Quartus, STM32CUBE, Arduino</li>
-                <li>Design Environments: NI Multisim, PSpice, etaps, PVsyst</li>
-                <li>Design Software:AutoCad, TIA Portal(+ step 7) </li>
-                <li>Libraries and packages: TensorFlow(+Keras), Pytorch, PyGame, OpenAI(+gym), Scikit-learn, OpenCV, Pandas, Stable Baselines</li>
-                <li>Version Control: Git, GitHub</li>
+                <li><strong>Programming Languages:</strong> Python, C/C++, Ruby, MATLAB + Simulink</li>
+                <li><strong>Device Programming:</strong> Verilog, Quartus, STM32CubeIDE, Arduino</li>
+                <li><strong>Design Environments:</strong> NI Multisim, PSpice, ETAP, PVsyst</li>
+                <li><strong>Design Software:</strong> AutoCAD, TIA Portal (+ Step 7)</li>
+                <li><strong>Libraries &amp; Frameworks:</strong> TensorFlow (+ Keras), PyTorch, PyGame, Gym, Scikit-learn, OpenCV, Pandas, Stable-Baselines3</li>
+                <li><strong>Version Control:</strong> Git, GitHub</li>
             </ul>
-        </div>
-        
-        <div id="experience" class="experience">
+        </section>
+
+        <section id="experience">
             <h2>Experience</h2>
-            <h3>Control Engineer at Parsikan Iran Engineering Consultants</h3>
-            <p>May 2024 - Present</p>
-            
-            <h3>Intern at IDEH GLOBAL KISH</h3>
-            <p>May 2022 - Sep 2022</p>
-        </div>
-        
-        <div id="education" class="education">
+            <div class="timeline-item">
+                <h3>Control Engineer — Parsikan Iran Engineering Consultants</h3>
+                <p class="date">May 2024 – Present</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Intern — IDEH GLOBAL KISH</h3>
+                <p class="date">May 2022 – Sep 2022</p>
+            </div>
+        </section>
+
+        <section id="education">
             <h2>Education</h2>
-            <p>Bachelor of Science in Electircal and Computer Engineering, Tehran University, 2019-2024</p>
-            <p>Master of Science in Electircal and Computer Engineering, Tehran University, 2024-Present</p>
-        </div>
-         <div id="papers" class="papers">
-        <h2>Papers</h2>
-        <p>ICROM 2023: <a href = "https://www.researchgate.net/profile/Ehsan-Forootan-2/publication/377833398_JoTyMo_Joint_Type_and_Movement_Detection_from_RGB_Images_of_Before_and_After_Interacting_with_Articulated_Objects/links/65cfc0c2e51f606f99767875/JoTyMo-Joint-Type-and-Movement-Detection-from-RGB-Images-of-Before-and-After-Interacting-with-Articulated-Objects.pdf" target = "_blank"></a>JoTyMo: Joint Type and Movement Detection from
-        RGB Images of Before and After Interacting with Articulated Objects</p>
-        </div>
-    </section>
+            <div class="timeline-item">
+                <h3>M.Sc. in Electrical and Computer Engineering</h3>
+                <p class="date">University of Tehran · 2024 – Present</p>
+            </div>
+            <div class="timeline-item">
+                <h3>B.Sc. in Electrical and Computer Engineering</h3>
+                <p class="date">University of Tehran · 2019 – 2024</p>
+            </div>
+        </section>
+
+        <section id="papers">
+            <h2>Papers</h2>
+            <div class="paper">
+                <h3>ICROM 2023</h3>
+                <p><a href="https://www.researchgate.net/profile/Ehsan-Forootan-2/publication/377833398_JoTyMo_Joint_Type_and_Movement_Detection_from_RGB_Images_of_Before_and_After_Interacting_with_Articulated_Objects/links/65cfc0c2e51f606f99767875/JoTyMo-Joint-Type-and-Movement-Detection-from-RGB-Images-of-Before-and-After-Interacting-with-Articulated-Objects.pdf" target="_blank" rel="noopener">JoTyMo: Joint Type and Movement Detection from RGB Images of Before and After Interacting with Articulated Objects</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>© 2026 Ehsan Forootan</footer>
 
     <script>
-        // Function to check if an element is visible in the viewport
-        function isElementInViewport(el) {
-            const rect = el.getBoundingClientRect();
-            return (
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-            );
-        }
-
-        // Add or remove the 'visible' class to sections when they scroll into view
-        function handleScroll() {
-            const sections = document.querySelectorAll('section');
-            sections.forEach(section => {
-                if (isElementInViewport(section)) {
-                    section.classList.add('visible');
-                } else {
-                    section.classList.remove('visible');
-                }
+        // Theme toggle (persists choice)
+        const btn = document.getElementById('themeBtn');
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); btn.textContent = '☀️ Light'; }
+        btn.addEventListener('click', () => {
+            const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (dark) { document.documentElement.removeAttribute('data-theme'); btn.textContent = '🌙 Dark'; localStorage.setItem('theme', 'light'); }
+            else { document.documentElement.setAttribute('data-theme', 'dark'); btn.textContent = '☀️ Light'; localStorage.setItem('theme', 'dark'); }
             });
-        }
 
-        // Listen for scroll and load events to trigger the animations
-        window.addEventListener('scroll', handleScroll);
-        window.addEventListener('load', handleScroll); // Run on page load
+// Intersection Observer for scroll animations
 
-    </script>
+const observer = new IntersectionObserver((entries) => {
+
+entries.forEach(entry => {
+
+if (entry.isIntersecting) {
+
+entry.target.classList.add(‘visible’);
+
+// observer.unobserve(entry.target); // Optional: keep animation every scroll or only once
+
+}
+
+});
+
+}, { threshold: 0.1 });
+
+document.querySelectorAll(‘section’).forEach(section => observer.observe(section));
+
+</script>
+
 </body>
+
 </html>
