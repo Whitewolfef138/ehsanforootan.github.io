@@ -135,10 +135,11 @@
             padding: 40px;
             margin-bottom: 30px;
             box-shadow: var(--shadow);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity .6s cubic-bezier(0.16, 1, 0.3, 1), transform .6s cubic-bezier(0.16, 1, 0.3, 1);
+            /* Removed the default opacity:0 so text is ALWAYS visible even without JS */
+            transition: background 0.3s, color 0.3s;
         }
+        
+
         section.visible { opacity: 1; transform: translateY(0); }
 
         h2 {
@@ -413,42 +414,32 @@
 
     <footer>© 2026 Ehsan Forootan · Built with precision.</footer>
 
-    <script>
-        // Theme toggle logic (Persists user choice)
-        const btn = document.getElementById('themeBtn');
-        const savedTheme = localStorage.getItem('theme');
-        
-        if (savedTheme === 'dark') { 
+  <script>
+    // Safe Theme Toggle
+    const btn = document.getElementById('themeBtn');
+    
+    // Check local storage safely
+    let savedTheme = null;
+    try { savedTheme = localStorage.getItem('theme'); } catch(e) {}
+
+    if (savedTheme === 'dark') { 
+        document.documentElement.setAttribute('data-theme', 'dark'); 
+        btn.textContent = '☀️ Light'; 
+    }
+
+    btn.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) { 
+            document.documentElement.removeAttribute('data-theme'); 
+            btn.textContent = '🌙 Dark'; 
+            try { localStorage.setItem('theme', 'light'); } catch(e) {}
+        } else { 
             document.documentElement.setAttribute('data-theme', 'dark'); 
             btn.textContent = '☀️ Light'; 
+            try { localStorage.setItem('theme', 'dark'); } catch(e) {}
         }
+    });
+</script>
 
-        btn.addEventListener('click', () => {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            if (isDark) { 
-                document.documentElement.removeAttribute('data-theme'); 
-                btn.textContent = '🌙 Dark'; 
-                localStorage.setItem('theme', 'light'); 
-            } else { 
-                document.documentElement.setAttribute('data-theme', 'dark'); 
-                btn.textContent = '☀️ Light'; 
-                localStorage.setItem('theme', 'dark'); 
-            }
-        });
-
-        // Intersection Observer for scroll fade-in animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    // Uncomment below to trigger animation only once
-                    // observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        // Corrected quotes here (was breaking script before)
-        document.querySelectorAll('section').forEach(section => observer.observe(section));
-    </script>
 </body>
 </html>
